@@ -1,5 +1,17 @@
+h1 {
+  text-align: center;
+  color:aqua;
+}
+
+img {
+  height: 200px;
+  width: 300px;
+  margin: auto;
+  display: block;
+}
+
 nav {
-  background-color: cornflowerblue;
+  background-color: aqua;
   padding: 10px;
 }
 
@@ -19,12 +31,12 @@ nav a {
 }
 
 nav a:hover {
-  color: pink;
+  color: hotpink;
   text-decoration: none;
 }
 
 body {
-  background-color: lightblue;
+  background-color: lightgray;
   text-align: center;
 }
 
@@ -32,4 +44,9 @@ main {
   margin-right: 20px;
   margin-left: 20px;
   background-color: white;
+}
+
+form {
+  width: 50%;
+  margin: auto;
 }
