@@ -1,7 +1,7 @@
 const React = require('react')
 const Def = require('../default')
 
-function edit_form (data) {
+function edit_form (data) { // This is the same as line 59 { place: place, id: req.params.id } from controller
     return (
         <Def>
           <main>

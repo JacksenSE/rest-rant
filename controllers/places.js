@@ -32,26 +32,64 @@ router.post('/', (req, res) => {
     res.render('places/new')
   })
 
-  //   DELETE ROUTE
+
+
   router.delete('/:id', (req, res) => {
-    res.send('DELETE /places/:id stub')
-  })
-
-  // DELETE COMMENT
+    db.Place.findByIdAndDelete(req.params.id)
+        .then(() => {
+            res.redirect('/places')
+        })
+        .catch(err => {
+            console.log('err', err)
+            res.render('error404')
+        })
+})
+  
 router.delete('/:id/comment/:commentId', (req, res) => {
-  res.send('GET /places/:id/comment/:commentId stub')
+  db.Comment.findByIdAndDelete(req.params.commentId)
+      .then(() => {
+          console.log('Success')
+          res.redirect(`/places/${req.params.id}`)
+      })
+      .catch(err => {
+          console.log('err', err)
+          res.render('error404')
+      })
 })
 
-  //   UPDATE ROUTE
+
+
+  router.get('/:id/edit', (req, res) => {
+    db.Place.findById(req.params.id)
+    .then(place => {
+        res.render('places/edit', { place: place, id: req.params.id }) 
+        //let data = { place: place, id: req.params.id  }
+        // data.place and I can data.id
+        // { key: value } objects have properties that are key: value pairs
+        //data.place
+    })
+    .catch(err => {
+        res.render('error404')
+    })
+})
+
+
+ 
 router.put('/:id', (req, res) => {
-  res.send('PUT /places/:id stub')
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+      res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
 })
 
-// EDIT
-router.get('/:id/edit', (req, res) => {
-  res.send('GET edit form stub')
-})
-// ADD COMMENT
+
+
+
+
 router.post('/:id/comment', (req, res) => {
   console.log(req.body)
   db.Place.findById(req.params.id)
@@ -74,6 +112,19 @@ router.post('/:id/comment', (req, res) => {
   req.body.rant = req.body.rant ? true : false
 })
 
+router.get('/:id/edit', (req, res) => {
+  db.Place.findById(req.params.id)
+  .then(place => {
+      res.render('places/edit', { place: place, id: req.params.id }) 
+      //let data = { place: place, id: req.params.id  }
+      // data.place and I can data.id
+      // { key: value } objects have properties that are key: value pairs
+      //data.place
+  })
+  .catch(err => {
+      res.render('error404')
+  })
+})
   
 //   SHOW ROUTE
   router.get('/:id', (req, res) => {
@@ -81,7 +132,7 @@ router.post('/:id/comment', (req, res) => {
     .populate('comments')
     .then(place => {
       console.log(place.comments)
-      res.render('places/show', { place })
+      res.render('places/show', { place: place, id: req.params.id })
     })
     .catch(err => {
       console.log('err', err)
