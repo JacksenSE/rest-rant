@@ -4,6 +4,7 @@ const express = require('express')
 const methodOverride = require('method-override')
 const app = express()
 
+const PORT = process.env.PORT
 // Express Settings
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
@@ -23,4 +24,4 @@ app.get('*', (req, res) => {
 })
 
 // Listen for Connections
-app.listen(process.env.PORT)
+app.listen(PORT, () => console.log(`Server is running in port ${PORT}`))
